@@ -1,75 +1,50 @@
+// src/components/Navbar/Navbar.tsx
 "use client";
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
 
-const links = [
-  { name: "Inicio", href: "#hero" },
-  { name: "Sobre mí", href: "#about" },
-  { name: "Habilidades", href: "#skills" },
-  { name: "Proyectos", href: "#projects" },
-  { name: "Experiencia", href: "#experience" },
-  { name: "Testimonios", href: "#testimonials" },
-  { name: "Contacto", href: "#contact" },
-];
+import React, { useState } from "react";
+import ThemeToggle from "./ThemeToggle";
+import LanguageToggle from "./LanguageToggle";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed w-full top-0 z-50 bg-gray-950/90 backdrop-blur border-b border-gray-800">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <motion.a
-          href="#hero"
-          className="text-2xl font-bold text-indigo-400"
-          whileHover={{ scale: 1.05 }}
-        >
-          Ghostbabby.dev
-        </motion.a>
-
-        {/* Desktop Links */}
-        <div className="hidden md:flex gap-8 text-gray-300">
-          {links.map((link) => (
-            <motion.a
-              key={link.name}
-              href={link.href}
-              className="hover:text-indigo-400 transition"
-              whileHover={{ scale: 1.05 }}
-            >
-              {link.name}
-            </motion.a>
-          ))}
+    <header className="col-span-12 bg-transparent sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto flex items-center justify-between py-4 px-4 md:px-8">
+        <div className="flex items-center gap-4">
+          {/* Mantén aquí tu logo/texto exactamente como la interfaz original */}
+          <a href="#" className="font-bold text-xl">Portafolio</a>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-gray-300 hover:text-indigo-400 transition"
-        >
-          {open ? <X size={26} /> : <Menu size={26} />}
-        </button>
+        <nav className="hidden md:flex items-center gap-6">
+          <a href="#hero" className="hover:underline">Inicio</a>
+          <a href="#about" className="hover:underline">Sobre mí</a>
+          <a href="#projects" className="hover:underline">Proyectos</a>
+          <a href="#contact" className="hover:underline">Contacto</a>
+        </nav>
+
+        <div className="flex items-center gap-3">
+          <LanguageToggle />
+          <ThemeToggle />
+          <button
+            className="md:hidden p-2"
+            onClick={() => setOpen((s) => !s)}
+            aria-label="Abrir menú"
+          >
+            ☰
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile menu (mantener estructura original si ya la tienes) */}
       {open && (
-        <motion.div
-          className="md:hidden bg-gray-900 border-t border-gray-800 flex flex-col items-center py-4 space-y-4"
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          {links.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              className="text-gray-300 hover:text-indigo-400 transition"
-              onClick={() => setOpen(false)}
-            >
-              {link.name}
-            </a>
-          ))}
-        </motion.div>
+        <div className="md:hidden bg-transparent px-4 pb-4">
+          <a href="#hero" className="block py-2">Inicio</a>
+          <a href="#about" className="block py-2">Sobre mí</a>
+          <a href="#projects" className="block py-2">Proyectos</a>
+          <a href="#contact" className="block py-2">Contacto</a>
+        </div>
       )}
-    </nav>
+    </header>
   );
 }

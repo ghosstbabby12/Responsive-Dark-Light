@@ -1,28 +1,73 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #1d1d1d;
-  --grey: #757575;
+/* Estilos globales */
+html, body {
+  scroll-behavior: smooth;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-grey: var(--grey);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #000000;
-    --foreground: #1d1d1d;
-    --grey: #757575;
-  }
-}
-
+/* Transiciones suaves entre temas */
 body {
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply transition-colors duration-300 ease-in-out;
 }
+
+/* Colores personalizados del tema oscuro */
+:root {
+  --color-bg: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-accent: #38bdf8;
+}
+
+/* Prefer dark by default, and provide light overrides without touching components */
+html { color-scheme: dark; }
+html.dark { background-color: var(--color-bg); }
+html:not(.dark) { color-scheme: light; }
+
+/* Base body colors */
+body { background-color: var(--color-bg); color: #e5e7eb; }
+html:not(.dark) body { background-color: #ffffff; color: #0f172a; }
+
+/* Light mode overrides for sections initially styled for dark */
+html:not(.dark) #hero { background: linear-gradient(to bottom, #f8fafc, #ffffff) !important; color: #0f172a !important; }
+html:not(.dark) #about,
+html:not(.dark) #projects,
+html:not(.dark) #skills,
+html:not(.dark) #experience,
+html:not(.dark) #testimonials,
+html:not(.dark) #contact { background-color: #ffffff !important; color: #0f172a !important; }
+
+/* Cards and surfaces in light */
+html:not(.dark) #projects .bg-gray-800,
+html:not(.dark) #testimonials .bg-gray-800,
+html:not(.dark) #experience .bg-gray-800,
+html:not(.dark) #skills .bg-gray-800 { background-color: #ffffff !important; color: #0f172a !important; box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; }
+
+/* Muted text adjustments for light */
+html:not(.dark) #projects .text-gray-300,
+html:not(.dark) #projects .text-gray-400,
+html:not(.dark) #projects .text-gray-500,
+html:not(.dark) #experience .text-gray-300,
+html:not(.dark) #experience .text-gray-400,
+html:not(.dark) #experience .text-gray-500,
+html:not(.dark) #testimonials .text-gray-300,
+html:not(.dark) #skills .text-gray-300 { color: #475569 !important; }
+
+/* Footer in light */
+html:not(.dark) footer { background-color: #f8fafc !important; border-top-color: #e5e7eb !important; color: #334155 !important; }
+
+/* Utilities to support themed surfaces used in /[lang] */
+/* Dark defaults */
+html.dark .bg-foreground { background-color: #1e293b !important; }
+html.dark .bg-background { background-color: #0f172a !important; }
+html.dark .text-grey { color: #94a3b8 !important; }
+html.dark .border-grey { border-color: #334155 !important; }
+
+/* Light overrides */
+html:not(.dark) .bg-foreground { background-color: #f8fafc !important; }
+html:not(.dark) .bg-background { background-color: #ffffff !important; }
+html:not(.dark) .text-grey { color: #475569 !important; }
+html:not(.dark) .border-grey { border-color: #e5e7eb !important; }
+
+/* Ensure visibility in light when components used text-white explicitly */
+html:not(.dark) .text-white { color: #0f172a !important; }

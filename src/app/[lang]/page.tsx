@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { getDictionary } from "../i18n/dictionaries";
 import { Lang, languages } from "../i18n/config";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export async function generateStaticParams() {
   return languages.map((lang) => ({ lang }));
@@ -17,10 +16,9 @@ export default async function Home({
 
   return (
     <div className="font-sans flex justify-center">
-      <LanguageSwitcher currentLang={lang} />
       <main className="grid grid-cols-12 container mt-20 gap-10">
-        <span className="flex items-center justify-center col-span-3 row-span-2 bg-white rounded-2xl overflow-hidden">
-          <Image src="/avatar.jpg" alt="avatar" width={300} height={300} />
+        <span className="flex items-center justify-center col-span-3 row-span-2 bg-foreground rounded-2xl overflow-hidden">
+          <Image src="/profile.jpg" alt="avatar" width={300} height={300} />
         </span>
 
         <p className="p-5 text-2xl text-white col-span-9 rounded-2xl bg-foreground">
