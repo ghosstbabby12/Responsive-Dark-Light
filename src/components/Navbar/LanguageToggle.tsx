@@ -2,7 +2,7 @@
 "use client";
 
 import React from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Lang, languages, defaultLang } from "@/app/i18n/config";
 
 function detectLang(pathname: string): Lang {
@@ -15,7 +15,6 @@ function detectLang(pathname: string): Lang {
 export default function LanguageToggle() {
   const router = useRouter();
   const pathname = usePathname() || "/";
-  const searchParams = useSearchParams();
 
   const current = detectLang(pathname);
   const next: Lang = current === "es" ? "en" : "es";
@@ -33,9 +32,8 @@ export default function LanguageToggle() {
       rest = pathname.startsWith("/") ? pathname.slice(1) : pathname;
     }
 
-    const qs = searchParams?.toString();
-    const query = qs ? `?${qs}` : "";
-    const newPath = `/${next}${rest ? `/${rest}` : ""}${query}`;
+    const qs = typeof window !== "undefined" ? window.location.search : "";
+    const newPath = `/${next}${rest ? `/${rest}` : ""}${qs}`;
     router.push(newPath);
   };
 
